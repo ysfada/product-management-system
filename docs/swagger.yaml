@@ -1,0 +1,1757 @@
+basePath: /api/v1
+definitions:
+  dtos.AttributeDto:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  dtos.AttributePaginatedDto:
+    properties:
+      attributes:
+        items:
+          $ref: '#/definitions/dtos.AttributeDto'
+        type: array
+      count:
+        type: integer
+      current_page:
+        type: integer
+      next_page:
+        type: integer
+      previous_page:
+        type: integer
+      size:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  dtos.CategoryDto:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  dtos.CategoryPaginatedDto:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/dtos.CategoryDto'
+        type: array
+      count:
+        type: integer
+      current_page:
+        type: integer
+      next_page:
+        type: integer
+      previous_page:
+        type: integer
+      size:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  dtos.ChangePasswordDto:
+    properties:
+      password:
+        type: string
+    required:
+    - password
+    type: object
+  dtos.ChangeUsernameDto:
+    properties:
+      username:
+        type: string
+    required:
+    - username
+    type: object
+  dtos.CreateAttributeDto:
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  dtos.CreateCategoryDto:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  dtos.CreateProductDto:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - category_id
+    - name
+    type: object
+  dtos.CreateProductVariantAttributeDto:
+    properties:
+      attribute_id:
+        type: integer
+      product_variant_id:
+        type: integer
+    type: object
+  dtos.CreateProductVariantDto:
+    properties:
+      name:
+        type: string
+      price:
+        type: number
+      product_id:
+        type: integer
+      stock:
+        type: integer
+    required:
+    - name
+    - price
+    - product_id
+    - stock
+    type: object
+  dtos.ImageDto:
+    properties:
+      id:
+        type: integer
+      image_url:
+        type: string
+      name:
+        type: string
+      thumbnail_url:
+        type: string
+    type: object
+  dtos.ProductDto:
+    properties:
+      category:
+        $ref: '#/definitions/dtos.CategoryDto'
+      category_id:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/dtos.ImageDto'
+        type: array
+      name:
+        type: string
+      variants:
+        items:
+          $ref: '#/definitions/dtos.ProductVariantDto'
+        type: array
+    required:
+    - category_id
+    - id
+    - name
+    type: object
+  dtos.ProductPaginatedDto:
+    properties:
+      count:
+        type: integer
+      current_page:
+        type: integer
+      next_page:
+        type: integer
+      previous_page:
+        type: integer
+      products:
+        items:
+          $ref: '#/definitions/dtos.ProductDto'
+        type: array
+      size:
+        type: integer
+      total_page:
+        type: integer
+    type: object
+  dtos.ProductVariantDto:
+    properties:
+      attributes:
+        items:
+          $ref: '#/definitions/dtos.AttributeDto'
+        type: array
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+      product:
+        $ref: '#/definitions/dtos.ProductDto'
+      product_id:
+        type: integer
+      stock:
+        type: integer
+    required:
+    - id
+    - name
+    - price
+    - product_id
+    - stock
+    type: object
+  dtos.ProductVariantPaginatedDto:
+    properties:
+      category:
+        $ref: '#/definitions/dtos.CategoryDto'
+      category_id:
+        type: integer
+      count:
+        type: integer
+      current_page:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      images:
+        items:
+          $ref: '#/definitions/dtos.ImageDto'
+        type: array
+      name:
+        type: string
+      next_page:
+        type: integer
+      previous_page:
+        type: integer
+      product_variants:
+        items:
+          $ref: '#/definitions/dtos.ProductVariantDto'
+        type: array
+      size:
+        type: integer
+      total_page:
+        type: integer
+      variants:
+        items:
+          $ref: '#/definitions/dtos.ProductVariantDto'
+        type: array
+    required:
+    - category_id
+    - id
+    - name
+    type: object
+  dtos.SigninDto:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dtos.SignupDto:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dtos.UpdateAttributeDto:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  dtos.UpdateCategoryDto:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
+    type: object
+  dtos.UpdateProductDto:
+    properties:
+      category_id:
+        type: integer
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - category_id
+    - id
+    - name
+    type: object
+  dtos.UpdateProductVariantDto:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+      product_id:
+        type: integer
+      stock:
+        type: integer
+    required:
+    - id
+    - name
+    - price
+    - product_id
+    - stock
+    type: object
+  dtos.UserDto:
+    properties:
+      id:
+        type: integer
+      is_active:
+        type: boolean
+      is_staff:
+        type: boolean
+      is_superuser:
+        type: boolean
+      username:
+        type: string
+    type: object
+info:
+  contact:
+    email: yusufadaa@gmail.com
+    name: Yusuf Ada
+    url: https://github.com/ysfada
+  description: This is an API for inventory management
+  license:
+    name: MIT
+    url: https://spdx.org/licenses/MIT.html
+  title: Inventory Management
+  version: "1.0"
+paths:
+  /attributes:
+    get:
+      consumes:
+      - application/json
+      description: Get all attributes
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: name or id
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.AttributePaginatedDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get attributes
+      tags:
+      - attributes
+    post:
+      consumes:
+      - application/json
+      description: Create new attribute
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateAttributeDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create attribute
+      tags:
+      - attributes
+  /attributes/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete attribute by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete attribute
+      tags:
+      - attributes
+    get:
+      consumes:
+      - application/json
+      description: Get attribute by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.AttributeDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get attribute by id
+      tags:
+      - attributes
+    put:
+      consumes:
+      - application/json
+      description: Update attribute by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateAttributeDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update attribute
+      tags:
+      - attributes
+  /attributes/search:
+    get:
+      consumes:
+      - application/json
+      description: Search attributes by attribute name
+      parameters:
+      - description: query string to search in name
+        in: query
+        name: q
+        required: true
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: name or id
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.AttributePaginatedDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Search attribute
+      tags:
+      - attributes
+  /categories:
+    get:
+      consumes:
+      - application/json
+      description: Get all categories
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: name or id
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.CategoryPaginatedDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get categories
+      tags:
+      - categories
+    post:
+      consumes:
+      - application/json
+      description: Create new category
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateCategoryDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create category
+      tags:
+      - categories
+  /categories/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete category by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete category
+      tags:
+      - categories
+    get:
+      consumes:
+      - application/json
+      description: Get category by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.CategoryDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get category by id
+      tags:
+      - categories
+    put:
+      consumes:
+      - application/json
+      description: Update category by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateCategoryDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update category
+      tags:
+      - categories
+  /categories/{id}/products:
+    get:
+      consumes:
+      - application/json
+      description: Get all products belongs to category
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: name or id
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.ProductDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get products
+      tags:
+      - categories
+  /categories/search:
+    get:
+      consumes:
+      - application/json
+      description: Search categories by category name
+      parameters:
+      - description: query string to search in name
+        in: query
+        name: q
+        required: true
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: name or id
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.CategoryPaginatedDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Search category
+      tags:
+      - categories
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: Get all products
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: name or id
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.ProductPaginatedDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get products
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      description: Create new product
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateProductDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create product
+      tags:
+      - products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete product by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete product
+      tags:
+      - products
+    get:
+      consumes:
+      - application/json
+      description: Get product by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.ProductDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get product by id
+      tags:
+      - products
+    put:
+      consumes:
+      - application/json
+      description: Update product by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateProductDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update product
+      tags:
+      - products
+  /products/{id}/images:
+    get:
+      consumes:
+      - application/json
+      description: Get images belongs product
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.ImageDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get images belongs product
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      description: Add new image to product
+      parameters:
+      - description: product image
+        in: formData
+        name: image
+        required: true
+        type: file
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Add image to product
+      tags:
+      - products
+  /products/{id}/images/{imageID}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove an image from product
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: imageID
+        in: path
+        name: imageID
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Remove image from product
+      tags:
+      - products
+  /products/{id}/variants:
+    get:
+      consumes:
+      - application/json
+      description: Get product variants
+      parameters:
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: name or id
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.ProductVariantPaginatedDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get product variants
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      description: Create new product variant
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateProductVariantDto'
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Create product variant
+      tags:
+      - products
+  /products/{id}/variants/{variantID}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete product variant by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: variantID
+        in: path
+        name: variantID
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete product variant
+      tags:
+      - products
+    get:
+      consumes:
+      - application/json
+      description: Get product variant by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: variantID
+        in: path
+        name: variantID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.ProductVariantDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get product variant by id
+      tags:
+      - products
+    put:
+      consumes:
+      - application/json
+      description: Update product variant by id
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: variantID
+        in: path
+        name: variantID
+        required: true
+        type: integer
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateProductVariantDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Update product variant
+      tags:
+      - products
+  /products/{id}/variants/{variantID}/attributes:
+    get:
+      consumes:
+      - application/json
+      description: Get attributes belongs product variant
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: variantID
+        in: path
+        name: variantID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.AttributeDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get attributes belongs product variant
+      tags:
+      - products
+    post:
+      consumes:
+      - application/json
+      description: Add new attribute to product variant
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateProductVariantAttributeDto'
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: variantID
+        in: path
+        name: variantID
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Add attribute to product variant
+      tags:
+      - products
+  /products/{id}/variants/{variantID}/attributes/{attributeID}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove an attribute from product variant
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: variantID
+        in: path
+        name: variantID
+        required: true
+        type: integer
+      - description: attributeID
+        in: path
+        name: attributeID
+        required: true
+        type: integer
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Remove attribute from product variant
+      tags:
+      - products
+  /products/{id}/variants/search:
+    get:
+      consumes:
+      - application/json
+      description: Search product variants
+      parameters:
+      - description: 'ex: [{''type'':''color'', ''names'': [''red'', ''yellow'']},
+          {''type'':''size'', ''names'': [''36'']}]'
+        in: query
+        name: attrs
+        type: string
+      - description: query string to search in name
+        in: query
+        name: q
+        required: true
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: id, name, price
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.ProductVariantPaginatedDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Search product variants
+      tags:
+      - products
+  /products/search:
+    get:
+      consumes:
+      - application/json
+      description: Search products by product name
+      parameters:
+      - description: query string to search in name
+        in: query
+        name: q
+        required: true
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: integer
+      - description: rows per page
+        in: query
+        name: size
+        type: integer
+      - description: name or id
+        in: query
+        name: sortBy
+        type: string
+      - description: ASC or DESC
+        in: query
+        name: orderBy
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dtos.ProductPaginatedDto'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Search product
+      tags:
+      - products
+  /users/me:
+    delete:
+      consumes:
+      - application/json
+      description: Delete current user
+      parameters:
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "403":
+          description: Forbidden
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete current user
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Get current users details
+      parameters:
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.UserDto'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get current users details
+      tags:
+      - users
+  /users/me/change-password:
+    post:
+      consumes:
+      - application/json
+      description: Change password
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ChangePasswordDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Change password
+      tags:
+      - users
+  /users/me/change-username:
+    post:
+      consumes:
+      - application/json
+      description: Change username
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.ChangeUsernameDto'
+      - description: Bearer
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "403":
+          description: Forbidden
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Change username
+      tags:
+      - users
+  /users/signin:
+    post:
+      consumes:
+      - application/json
+      description: Signin with username and password
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.SigninDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Signin
+      tags:
+      - users
+  /users/signup:
+    post:
+      consumes:
+      - application/json
+      description: Create new account
+      parameters:
+      - description: dto
+        in: body
+        name: dto
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.SignupDto'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Signup
+      tags:
+      - users
+swagger: "2.0"

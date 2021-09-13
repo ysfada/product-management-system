@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>common: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/ysfada/product-management-system/domain/common/errors.go (66.7%)</option>
+				
+				<option value="file1">github.com/ysfada/product-management-system/util/hasher/argon2.go (42.6%)</option>
+				
+				<option value="file2">github.com/ysfada/product-management-system/util/hasher/bcrypt.go (66.7%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package common
+
+import (
+        "encoding/json"
+        "errors"
+)
+
+var (
+        // ErrInternalServerError will throw if any the Internal Server Error happen
+        ErrInternalServerError = errors.New("internal server error")
+        // ErrNotFound will throw if the requested item is not exists
+        ErrNotFound = errors.New("your requested item is not found")
+        // ErrConflict will throw if the current action already exists
+        ErrConflict = errors.New("your item already exist")
+        // ErrBadParamInput will throw if the given request-body or params is not valid
+        ErrBadParamInput = errors.New("given param is not valid")
+)
+
+type AppErr struct {
+        Message string
+        Detail  interface{}
+}
+
+func (g *AppErr) Error() string <span class="cov8" title="1">{
+        if b, err := json.Marshal(g); err != nil </span><span class="cov0" title="0">{
+                return err.Error()
+        }</span> else<span class="cov8" title="1"> {
+                return string(b)
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package hasher
+
+import (
+        "crypto/subtle"
+        "encoding/base64"
+        "errors"
+        "fmt"
+        "strings"
+
+        "github.com/ysfada/product-management-system/util"
+        "golang.org/x/crypto/argon2"
+)
+
+type Argon2Params struct {
+        Memory      uint32
+        Iterations  uint32
+        Parallelism uint8
+        SaltLength  uint32
+        KeyLength   uint32
+}
+
+func (p *Argon2Params) Defaults() <span class="cov8" title="1">{
+        p.Memory = 64 * 1024
+        p.Iterations = 1
+        p.Parallelism = 2
+        p.SaltLength = 16
+        p.KeyLength = 32
+}</span>
+
+type Argon2 struct {
+        Params *Argon2Params
+}
+
+var _ Hasher = (*Argon2)(nil)
+
+func NewArgon2(argon2Params ...*Argon2Params) Hasher <span class="cov8" title="1">{
+        hasher := &amp;Argon2{}
+
+        if argon2Params == nil </span><span class="cov8" title="1">{
+                hasher.Params = &amp;Argon2Params{}
+                hasher.Params.Defaults()
+        }</span> else<span class="cov0" title="0"> if len(argon2Params) == 1 </span><span class="cov0" title="0">{
+                hasher.Params = argon2Params[0]
+        }</span> else<span class="cov0" title="0"> {
+                panic("len(params) must not be longer than 1")</span>
+        }
+
+        <span class="cov8" title="1">return hasher</span>
+}
+
+func (h *Argon2) Hash(password string) ([]byte, error) <span class="cov8" title="1">{
+        salt, err := util.GenerateRandomBytes(h.Params.SaltLength)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov8" title="1">key := argon2.IDKey([]byte(password), salt, h.Params.Iterations, h.Params.Memory, h.Params.Parallelism, h.Params.KeyLength)
+
+        b64Salt := base64.RawStdEncoding.EncodeToString(salt)
+        b64Key := base64.RawStdEncoding.EncodeToString(key)
+
+        hash := []byte(fmt.Sprintf("$argon2id$v=%d$m=%d,t=%d,p=%d$%s$%s", argon2.Version, h.Params.Memory, h.Params.Iterations, h.Params.Parallelism, b64Salt, b64Key))
+        return hash, nil</span>
+}
+
+func (h *Argon2) Compare(hashedPassword, password string) error <span class="cov8" title="1">{
+        params, salt, key, err := h.decodeHash(hashedPassword)
+        if err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+
+        <span class="cov0" title="0">otherKey := argon2.IDKey([]byte(password), salt, params.Iterations, params.Memory, params.Parallelism, params.KeyLength)
+
+        keyLen := int32(len(key))
+        otherKeyLen := int32(len(otherKey))
+
+        if subtle.ConstantTimeEq(keyLen, otherKeyLen) == 0 </span><span class="cov0" title="0">{
+                return errors.New("argon2id: hashedPassword is not the hash of the given password")
+        }</span>
+        <span class="cov0" title="0">if subtle.ConstantTimeCompare(key, otherKey) == 1 </span><span class="cov0" title="0">{
+                return nil
+        }</span>
+        <span class="cov0" title="0">return errors.New("argon2id: hashedPassword is not the hash of the given password")</span>
+}
+
+func (h *Argon2) decodeHash(hash string) (params *Argon2Params, salt, key []byte, err error) <span class="cov8" title="1">{
+        vals := strings.Split(hash, "$")
+        if len(vals) != 6 </span><span class="cov8" title="1">{
+                return nil, nil, nil, errors.New("argon2id: hash is not in the correct format")
+        }</span>
+
+        <span class="cov0" title="0">var version int
+        _, err = fmt.Sscanf(vals[2], "v=%d", &amp;version)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, nil, nil, err
+        }</span>
+        <span class="cov0" title="0">if version != argon2.Version </span><span class="cov0" title="0">{
+                return nil, nil, nil, errors.New("argon2id: incompatible version of argon2")
+        }</span>
+
+        <span class="cov0" title="0">params = &amp;Argon2Params{}
+        _, err = fmt.Sscanf(vals[3], "m=%d,t=%d,p=%d", &amp;params.Memory, &amp;params.Iterations, &amp;params.Parallelism)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, nil, nil, err
+        }</span>
+
+        <span class="cov0" title="0">salt, err = base64.RawStdEncoding.DecodeString(vals[4])
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, nil, nil, err
+        }</span>
+        <span class="cov0" title="0">params.SaltLength = uint32(len(salt))
+
+        key, err = base64.RawStdEncoding.DecodeString(vals[5])
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, nil, nil, err
+        }</span>
+        <span class="cov0" title="0">params.KeyLength = uint32(len(key))
+
+        return params, salt, key, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package hasher
+
+import "golang.org/x/crypto/bcrypt"
+
+type Bcrypt struct {
+        Cost int
+}
+
+var _ Hasher = (*Bcrypt)(nil)
+
+func NewBcrypt(cost ...int) Hasher <span class="cov8" title="1">{
+        hasher := &amp;Bcrypt{}
+        if cost == nil </span><span class="cov8" title="1">{
+                hasher.Cost = bcrypt.DefaultCost
+        }</span> else<span class="cov0" title="0"> if len(cost) == 1 </span><span class="cov0" title="0">{
+                hasher.Cost = cost[0]
+        }</span> else<span class="cov0" title="0"> {
+                panic("len(cost) must not be longer than 1")</span>
+        }
+
+        <span class="cov8" title="1">return hasher</span>
+}
+
+func (h *Bcrypt) Hash(password string) ([]byte, error) <span class="cov8" title="1">{
+        return bcrypt.GenerateFromPassword([]byte(password), h.Cost)
+}</span>
+
+func (h *Bcrypt) Compare(hashedPassword, password string) error <span class="cov8" title="1">{
+        return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

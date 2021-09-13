@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "davidanson.vscode-markdownlint",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "golang.go",
+    "mikestead.dotenv",
+    "ms-azuretools.vscode-docker"
+  ]
+}

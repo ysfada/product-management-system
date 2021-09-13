@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:13.4-alpine3.14
+    # image: postgres-tr:13.2
+    # build:
+    #   context: ./database
+    #   dockerfile: Dockerfile
+    container_name: postgres
+    # user: postgres
+    hostname: postgres
+    restart: always
+    networks:
+      - postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # - pglog:/var/log/postgresql
+      # - pgconfig:/etc/postgresql
+      # - ./database/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
+      - ./database/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    # env_file:
+    #   - ./dotenv/.env.postgres
+
+  pgadmin:
+    image: dpage/pgadmin4:5.7
+    container_name: pgadmin
+    # user: pgadmin
+    hostname: pgadmin
+    restart: always
+    networks:
+      - postgres
+    volumes:
+      - pgadmindata:/var/lib/pgadmin
+    ports:
+      - '3333:80'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    # env_file:
+    #   - ./dotenv/.env.pgadmin
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  pgdata:
+    name: pgdata
+  # pglog: ~
+  # pgconfig: ~
+  pgadmindata:
+    name: pgadmindata

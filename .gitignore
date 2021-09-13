@@ -1,9 +1,33 @@
+# Created by https://www.toptal.com/developers/gitignore/api/go,compressed,dotenv
+# Edit at https://www.toptal.com/developers/gitignore?templates=go,compressed,dotenv
+
+### Compressed ###
+*.7z
+*.deb
+*.gz
+*.pkg
+*.rar
+*.rpm
+*.sit
+*.sitx
+*.tar
+*.zip
+*.zipx
+*.tgz
+
+### dotenv ###
+.env
+# dotenv/\*
+# !dotenv/\*.example
+
+### Go ###
 # Binaries for programs and plugins
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
+bin/*
 
 # Test binary, built with `go test -c`
 *.test
@@ -13,3 +37,9 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+### Go Patch ###
+/vendor/
+/Godeps/
+
+# End of https://www.toptal.com/developers/gitignore/api/go,compressed
